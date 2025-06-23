@@ -1,0 +1,18 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: dummy
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: test
+    driver:
+      image: techneg/ci-semantic-release:local-test
+      platform: debian
+
+suites:
+  - name: default

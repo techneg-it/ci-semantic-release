@@ -1,0 +1,33 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-merge-conflict
+        args: [--assume-in-merge]
+      - id: check-yaml
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.33.0
+    hooks:
+      - id: check-github-workflows
+        name: Check GitHub workflows with check-jsonschema
+        args: ["--verbose"]
+      - id: check-renovate
+        name: Check Renovate config with check-jsonschema
+        additional_dependencies: [json5==0.9.14]
+        args: ["--verbose"]
+  - repo: https://github.com/AleksaC/hadolint-py
+    rev: v2.12.0.3
+    hooks:
+      - id: hadolint
+        name: Check Dockerfiles with hadolint
+        args: [--failure-threshold, error]
+  - repo: https://github.com/rubocop-hq/rubocop
+    rev: v1.75.7
+    hooks:
+      - id: rubocop
+        name: Check Ruby files with rubocop
+        args: [--debug]
+        language_version: system
