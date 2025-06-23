@@ -1,0 +1,77 @@
+name: Build & test image
+
+on:
+  workflow_call:
+    inputs:
+      image-namespace:
+        required: true
+        type: string
+      image-repo:
+        required: true
+        type: string
+      no-cache-filter:
+        required: false
+        type: string
+      release:
+        type: boolean
+        default: true
+    secrets:
+      push-token:
+        # See https://docs.github.com/en/actions/using-workflows/triggering-a-workflow
+        description: To trigger the `publish` workflow use a GitHub App installation access token
+                     or a personal access token
+        required: true
+
+jobs:
+  build:
+    name: Build & test image
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false    # Prevent credentials conflict when running `semantic-release`
+      - name: Debug on runner (When re-run with "Enable debug logging" checked)
+        if: runner.debug
+        uses: mxschmitt/action-tmate@a283f9441d2d96eb62436dc46d7014f5d357ac22 # v3.17
+        with:
+          detached: true
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
+      - name: Build and export locally to Docker
+        uses: docker/build-push-action@1dc73863535b631f98b2378be8619f83b136f4a0 # v6.17.0
+        with:
+          context: .
+          load: true
+          tags: ${{ inputs.image-namespace }}/${{ inputs.image-repo }}:local-test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          no-cache-filters: ${{ inputs.no-cache-filter }}
+      - name: Install Test Kitchen
+        uses: actionshub/chef-install@776a917c09d87c381d1d5342f83cd554223fa49c # 3.0.1
+        env:
+          # renovate: datasource=custom.omnitruck depName=chef-workstation
+          CHEF_WS_VERSION: 25.2.1075
+        with:
+          project: chef-workstation
+          version: ${{ env.CHEF_WS_VERSION }}
+      - name: Prepare Test Kitchen
+        env:
+          CHEF_LICENSE: accept-silent
+          # renovate: datasource=rubygems depName=kitchen-docker
+          KITCHEN-DOCKER_VERSION: 3.0.0
+        run: chef gem install kitchen-docker --version ${{ env.KITCHEN-DOCKER_VERSION }}
+      - name: Run Test Kitchen
+        run: kitchen test
+      - name: Run `semantic-release`
+        uses: codfish/semantic-release-action@b621d34fabe0940f031e89b6ebfea28322892a10 # v3.5.0
+        id: sem-rel
+        with:
+          dry-run: ${{ !inputs.release }}
+          plugins: |
+            [ "@semantic-release/commit-analyzer",
+              "@semantic-release/release-notes-generator",
+              "@semantic-release/github"
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.push-token }}

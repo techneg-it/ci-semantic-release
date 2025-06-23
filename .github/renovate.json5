@@ -1,0 +1,48 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  enabledManagers: [
+    'copier',
+    'custom.regex',
+    'git-submodules',
+  ],
+  extends: [
+    ':automergeDigest',
+    ':automergeMinor',
+    ':semanticPrefixChore',
+    'config:recommended',
+  ],
+  customManagers: [
+    {
+      customType: 'regex',
+      fileMatch: ['^\\.schedule-version$'],
+      matchStrings: [
+        '(?<currentValue>\\S+)\\n'
+      ],
+      datasourceTemplate: 'github-tags',
+      depNameTemplate: 'techneg-it/ci-semantic-release',
+    },
+  ],
+  'git-submodules': {
+    enabled: true
+  },
+  packageRules: [
+    {
+      matchFileNames: ['.schedule-version'],
+      extends: [
+        ':semanticPrefixFix',
+        'schedule:weekly',
+      ],
+      commitMessageAction: '',
+      commitMessageExtra: '({{prettyNewVersion}})',
+      commitMessageTopic: 'Scheduled update',
+      minimumReleaseAge: '1 day',
+      platformAutomerge: false,
+    },
+    {
+      matchManagers: [
+        'git-submodules',
+      ],
+      automerge: true,
+    },
+  ],
+}

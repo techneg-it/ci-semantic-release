@@ -1,0 +1,33 @@
+name: Build & Publish
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  run-publish-workflow:
+    name: Run `publish` workflow
+    uses: ./.github/workflows/libpublish.yml
+    with:
+      docker-registry: docker.io
+      image-namespace: techneg
+      image-repo: ci-semantic-release
+      labels: org.opencontainers.image.authors=SaltStack Formulas <GitHub @saltstack-formulas>
+      no-cache-filter: update
+    secrets:
+      registry-password: ${{ secrets.REGISTRY_TOKEN }}
+      registry-username: ${{ secrets.REGISTRY_USERNAME }}
+  report:
+    name: Report success
+    needs:
+      - run-publish-workflow
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Update Healthchecks.io
+        run: |
+          if [ -n "${HC_UUID}" ]; then
+            curl -fsS -m 10 --retry 5 -o /dev/null "https://hc-ping.com/${HC_UUID}"
+          fi
+        env:
+          HC_UUID: ${{ secrets.HC_UUID }}
