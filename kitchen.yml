@@ -1,12 +1,24 @@
 ---
 driver:
   name: docker
+  provision_command: |
+    DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
+      wget
 
 provisioner:
-  name: dummy
+  name: shell
+  command: |
+    git init -b main
+    wget https://github.com/saltstack-formulas/template-formula/raw/master/release.config.js
+    wget https://github.com/saltstack-formulas/template-formula/raw/master/release-rules.js
+    git add release*
+    git commit -m "test: adding a commit for testing"
 
 verifier:
   name: inspec
+  inputs:
+    # renovate: datasource=npm depName=semantic-release
+    SEM_REL_VERSION: 24.2.5
 
 platforms:
   - name: test

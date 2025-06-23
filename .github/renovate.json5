@@ -3,6 +3,7 @@
   enabledManagers: [
     'copier',
     'custom.regex',
+    'dockerfile',
     'git-submodules',
   ],
   extends: [
@@ -10,6 +11,8 @@
     ':automergeMinor',
     ':semanticPrefixChore',
     'config:recommended',
+    'docker:pinDigests',
+    'regexManagers:dockerfileVersions',
   ],
   customManagers: [
     {
@@ -20,6 +23,15 @@
       ],
       datasourceTemplate: 'github-tags',
       depNameTemplate: 'techneg-it/ci-semantic-release',
+    },
+    {
+      customType: 'regex',
+      fileMatch: [
+        '(^|/)\\.?kitchen(?:\\.local)?\\.yml$',
+      ],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>[^\\s]+?)(?: (?:packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: extractVersion=(?<extractVersion>[^\\s]+?))?\\s+[A-Za-z0-9_]+?_VERSION\\s*:\\s*["\']?(?<currentValue>.+?)["\']?\\s',
+      ]
     },
   ],
   'git-submodules': {
