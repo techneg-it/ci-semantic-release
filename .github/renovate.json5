@@ -17,9 +17,11 @@
   customManagers: [
     {
       customType: 'regex',
-      fileMatch: ['^\\.schedule-version$'],
+      managerFilePatterns: [
+        '^\\.schedule-version$',
+      ],
       matchStrings: [
-        '(?<currentValue>\\S+)\\n'
+        '(?<currentValue>\\S+)\\n',
       ],
       datasourceTemplate: 'github-tags',
       depNameTemplate: 'techneg-it/ci-semantic-release',
@@ -35,11 +37,13 @@
     },
   ],
   'git-submodules': {
-    enabled: true
+    enabled: true,
   },
   packageRules: [
     {
-      matchFileNames: ['.schedule-version'],
+      matchFileNames: [
+        '.schedule-version',
+      ],
       extends: [
         ':semanticPrefixFix',
         'schedule:weekly',
