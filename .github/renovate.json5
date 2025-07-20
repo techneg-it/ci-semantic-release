@@ -18,7 +18,7 @@
     {
       customType: 'regex',
       managerFilePatterns: [
-        '^\\.schedule-version$',
+        '.schedule-version',
       ],
       matchStrings: [
         '(?<currentValue>\\S+)\\n',
