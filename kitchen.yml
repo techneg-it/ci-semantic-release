@@ -13,6 +13,7 @@ provisioner:
     wget https://github.com/saltstack-formulas/template-formula/raw/master/release-rules.js
     git add release*
     git commit -m "test: adding a commit for testing"
+    wget https://github.com/saltstack-formulas/template-formula/raw/master/AUTHORS.md
 
 verifier:
   name: inspec
