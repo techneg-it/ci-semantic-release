@@ -42,11 +42,17 @@ RUN : \
 COPY --from=go-builder /maintainer /usr/local/bin
 
 FROM install AS update
+
+SHELL ["/bin/bash", "-x", "-o", "pipefail", "-c"]
+
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN : \
     && apt-get update \
     && apt-get install --yes --no-install-recommends \
          ca-certificates \
          git \
+         m2r \
     && git config --system user.name "Null" \
     && git config --system user.email "null@example.com" \
     && :
