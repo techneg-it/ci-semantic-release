@@ -1,5 +1,6 @@
 module.exports = {
   ci: false,
+  preset: 'conventionalcommits',
   repositoryUrl: '.',
   plugins: [
     ['@semantic-release/commit-analyzer'],
