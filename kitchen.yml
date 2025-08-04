@@ -1,19 +1,13 @@
 ---
 driver:
   name: docker
+  mount: type=bind,src=./test/integration/files,target=/files,ro
   provision_command: |
     DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
       wget
 
 provisioner:
   name: shell
-  command: |
-    git init -b main
-    wget https://github.com/saltstack-formulas/template-formula/raw/master/release.config.js
-    wget https://github.com/saltstack-formulas/template-formula/raw/master/release-rules.js
-    git add release*
-    git commit -m "test: adding a commit for testing"
-    wget https://github.com/saltstack-formulas/template-formula/raw/master/AUTHORS.md
 
 verifier:
   name: inspec
@@ -29,3 +23,12 @@ platforms:
 
 suites:
   - name: default
+    provisioner:
+      command: |
+        rm -rf .git
+        git init -b master
+        cp /files/test_default/*.js .
+        git add *.js
+        git commit -m "feat: adding a commit for testing"
+        cp /files/test_default/AUTHORS.md .
+        rm -f AUTHORS.rst
