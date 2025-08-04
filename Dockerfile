@@ -31,12 +31,15 @@ ARG SR_CHLG_VERSION=6.0.3
 ARG SR_EXEC_VERSION=7.1.0
 # renovate: datasource=npm depName=@semantic-release/git
 ARG SR_GIT_VERSION=10.0.1
+# renovate: datasource=npm depName=conventional-changelog-conventionalcommits
+ARG CC_CONV_COMMITS_VERSION=9.1.0
 
 RUN : \
     && npm install -g semantic-release@${SEM_REL_VERSION} \
          @semantic-release/changelog@${SR_CHLG_VERSION} \
          @semantic-release/exec@${SR_EXEC_VERSION} \
          @semantic-release/git@${SR_GIT_VERSION} \
+         conventional-changelog-conventionalcommits@${CC_CONV_COMMITS_VERSION} \
     && :
 
 COPY --from=go-builder /maintainer /usr/local/bin
