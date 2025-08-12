@@ -3,6 +3,9 @@ name: Build & test image
 on:
   workflow_call:
     inputs:
+      build-args:
+        required: false
+        type: string
       image-namespace:
         required: true
         type: string
@@ -12,15 +15,6 @@ on:
       no-cache-filter:
         required: false
         type: string
-      release:
-        type: boolean
-        default: true
-    secrets:
-      push-token:
-        # See https://docs.github.com/en/actions/using-workflows/triggering-a-workflow
-        description: To trigger the `publish` workflow use a GitHub App installation access token
-                     or a personal access token
-        required: true
 
 jobs:
   build:
@@ -28,9 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          persist-credentials: false    # Prevent credentials conflict when running `semantic-release`
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Debug on runner (When re-run with "Enable debug logging" checked)
         if: runner.debug
         uses: mxschmitt/action-tmate@a283f9441d2d96eb62436dc46d7014f5d357ac22 # v3.17
@@ -44,6 +36,7 @@ jobs:
           context: .
           load: true
           tags: ${{ inputs.image-namespace }}/${{ inputs.image-repo }}:local-test
+          build-args: ${{ inputs.build-args }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           no-cache-filters: ${{ inputs.no-cache-filter }}
@@ -63,15 +56,3 @@ jobs:
         run: chef gem install kitchen-docker --version ${{ env.KITCHEN-DOCKER_VERSION }}
       - name: Run Test Kitchen
         run: kitchen test
-      - name: Run `semantic-release`
-        uses: codfish/semantic-release-action@b621d34fabe0940f031e89b6ebfea28322892a10 # v3.5.0
-        id: sem-rel
-        with:
-          dry-run: ${{ !inputs.release }}
-          plugins: |
-            [ "@semantic-release/commit-analyzer",
-              "@semantic-release/release-notes-generator",
-              "@semantic-release/github"
-            ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.push-token }}
