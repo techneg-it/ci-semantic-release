@@ -8,8 +8,14 @@ on:
 jobs:
   run-publish-workflow:
     name: Run `publish` workflow
+    strategy:
+      fail-fast: false
+      matrix:
+        key:
+          - value
     uses: ./.github/workflows/libpublish.yml
     with:
+      build-args: KEY=${{ matrix.key }}
       docker-registry: docker.io
       image-namespace: techneg
       image-repo: ci-semantic-release
