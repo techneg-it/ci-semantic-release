@@ -3,11 +3,7 @@
   enabledManagers: [
     'copier',
     'custom.regex',
-<<<<<<< before updating
     'dockerfile',
-    'git-submodules',
-=======
->>>>>>> after updating
   ],
   extends: [
     'github>techneg-it/.github',
@@ -15,12 +11,7 @@
     ':automergeDigest',
     ':automergeMinor',
     ':semanticPrefixChore',
-<<<<<<< before updating
-    'config:recommended',
-    'docker:pinDigests',
     'customManagers:dockerfileVersions',
-=======
->>>>>>> after updating
   ],
   customManagers: [
     {
