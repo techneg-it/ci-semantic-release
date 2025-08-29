@@ -3,16 +3,24 @@
   enabledManagers: [
     'copier',
     'custom.regex',
+<<<<<<< before updating
     'dockerfile',
     'git-submodules',
+=======
+>>>>>>> after updating
   ],
   extends: [
+    'github>techneg-it/.github',
+    'github>techneg-it/.github:copier',
     ':automergeDigest',
     ':automergeMinor',
     ':semanticPrefixChore',
+<<<<<<< before updating
     'config:recommended',
     'docker:pinDigests',
     'customManagers:dockerfileVersions',
+=======
+>>>>>>> after updating
   ],
   customManagers: [
     {
@@ -36,9 +44,6 @@
       ],
     },
   ],
-  'git-submodules': {
-    enabled: true,
-  },
   packageRules: [
     {
       matchFileNames: [
@@ -53,12 +58,6 @@
       commitMessageTopic: 'Scheduled update',
       minimumReleaseAge: '1 day',
       platformAutomerge: false,
-    },
-    {
-      matchManagers: [
-        'git-submodules',
-      ],
-      automerge: true,
     },
   ],
 }
