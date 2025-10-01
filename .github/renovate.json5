@@ -1,13 +1,5 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-<<<<<<< before updating
-  enabledManagers: [
-    'copier',
-    'custom.regex',
-    'dockerfile',
-  ],
-=======
->>>>>>> after updating
   extends: [
     'github>techneg-it/.github',
     'github>techneg-it/.github:check-jsonschema',
