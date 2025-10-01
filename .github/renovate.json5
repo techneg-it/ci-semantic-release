@@ -1,18 +1,34 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+<<<<<<< before updating
   enabledManagers: [
     'copier',
     'custom.regex',
     'dockerfile',
   ],
+=======
+>>>>>>> after updating
   extends: [
     'github>techneg-it/.github',
-    'github>techneg-it/.github:copier',
+    'github>techneg-it/.github:check-jsonschema',
+    'github>techneg-it/.github:copier-new',
+    'github>techneg-it/.github:github-actions',
+    'github>techneg-it/.github:pre-commit',
+    'github>techneg-it/.github:python-versions',
+    'github>techneg-it/.github:weekly',
     ':automergeDigest',
     ':automergeMinor',
     ':semanticPrefixChore',
     'customManagers:dockerfileVersions',
   ],
+  customDatasources: {
+    omnitruck: {
+      defaultRegistryUrlTemplate: 'https://omnitruck.chef.io/stable/{{packageName}}/versions/latest',
+      transformTemplates: [
+        '{"releases": [{ "version": $string($) }] }',
+      ],
+    },
+  },
   customManagers: [
     {
       customType: 'regex',
@@ -36,6 +52,12 @@
     },
   ],
   packageRules: [
+    {
+      matchPackageNames: [
+        'AleksaC/hadolint-py',
+      ],
+      versioning: 'loose',
+    },
     {
       matchFileNames: [
         '.schedule-version',
