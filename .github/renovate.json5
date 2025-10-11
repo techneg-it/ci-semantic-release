@@ -9,8 +9,12 @@
     'github>techneg-it/.github:python-versions',
     'github>techneg-it/.github:weekly',
     ':automergeDigest',
+<<<<<<< before updating
     ':automergeMinor',
     ':semanticPrefixChore',
+=======
+    ':automergeStableNonMajor',
+>>>>>>> after updating
     'customManagers:dockerfileVersions',
   ],
   customDatasources: {
