@@ -13,7 +13,7 @@ verifier:
   name: inspec
   inputs:
     # renovate: datasource=npm depName=semantic-release
-    SEM_REL_VERSION: 24.2.9
+    SEM_REL_VERSION: 25.0.0
 
 platforms:
   - name: test
