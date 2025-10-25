@@ -24,7 +24,7 @@ SHELL ["/bin/bash", "-x", "-o", "pipefail", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
 # renovate: datasource=npm depName=semantic-release
-ARG SEM_REL_VERSION=25.0.0
+ARG SEM_REL_VERSION=25.0.1
 # renovate: datasource=npm depName=@semantic-release/changelog
 ARG SR_CHLG_VERSION=6.0.3
 # renovate: datasource=npm depName=@semantic-release/exec
