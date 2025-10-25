@@ -17,7 +17,7 @@ RUN : \
     && go install github.com/maintainer-org/maintainer@${MNTN_VERSION} \
     && :
 
-FROM node:22-bookworm-slim@sha256:d943bf20249f8b92eff6f605362df2ee9cf2d6ce2ea771a8886e126ec8714f08 AS install
+FROM node:22-bookworm-slim@sha256:f9f7f95dcf1f007b007c4dcd44ea8f7773f931b71dc79d57c216e731c87a090b AS install
 
 SHELL ["/bin/bash", "-x", "-o", "pipefail", "-c"]
 
