@@ -25,7 +25,7 @@ repos:
         name: Check Dockerfiles with hadolint
         args: [--failure-threshold, error]
   - repo: https://github.com/rubocop-hq/rubocop
-    rev: v1.81.6
+    rev: v1.81.7
     hooks:
       - id: rubocop
         name: Check Ruby files with rubocop
