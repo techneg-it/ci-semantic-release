@@ -9,7 +9,7 @@ repos:
         args: [--assume-in-merge]
       - id: check-yaml
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.0
+    rev: 0.36.1
     hooks:
       - id: check-github-workflows
         name: Check GitHub workflows with check-jsonschema
@@ -25,7 +25,7 @@ repos:
         name: Check Dockerfiles with hadolint
         args: [--failure-threshold, error]
   - repo: https://github.com/rubocop-hq/rubocop
-    rev: v1.82.1
+    rev: v1.84.0
     hooks:
       - id: rubocop
         name: Check Ruby files with rubocop
