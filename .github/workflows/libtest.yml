@@ -32,7 +32,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
       - name: Build and export locally to Docker
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
         with:
           context: .
           load: true
@@ -42,18 +42,9 @@ jobs:
           cache-to: type=gha,mode=max
           no-cache-filters: ${{ inputs.no-cache-filter }}
       - name: Install Test Kitchen
-        uses: actionshub/chef-install@776a917c09d87c381d1d5342f83cd554223fa49c # 3.0.1
-        env:
-          # renovate: datasource=custom.omnitruck depName=chef-workstation
-          CHEF_WS_VERSION: 25.12.1102
+        uses: ruby/setup-ruby@09a7688d3b55cf0e976497ff046b70949eeaccfd # v1.288.0
         with:
-          project: chef-workstation
-          version: ${{ env.CHEF_WS_VERSION }}
-      - name: Prepare Test Kitchen
-        env:
-          CHEF_LICENSE: accept-silent
-          # renovate: datasource=rubygems depName=kitchen-docker
-          KITCHEN-DOCKER_VERSION: 3.0.0
-        run: chef gem install kitchen-docker --version ${{ env.KITCHEN-DOCKER_VERSION }}
+          bundler-cache: true
+          ruby-version: '3.1'
       - name: Run Test Kitchen
-        run: kitchen test
+        run: bundle exec kitchen test
