@@ -12,6 +12,10 @@
     ':automergeStableNonMajor',
     'customManagers:dockerfileVersions',
   ],
+  // Disable `bundler` to keep Test Kitchen versions in sync with Chef Workstation
+  bundler: {
+    enabled: false,
+  },
   customDatasources: {
     omnitruck: {
       defaultRegistryUrlTemplate: 'https://omnitruck.chef.io/stable/{{packageName}}/versions/latest',
@@ -48,6 +52,12 @@
         'AleksaC/hadolint-py',
       ],
       versioning: 'loose',
+    },
+    {
+      // Update Ruby (for Test Kitchen) manually to keep in sync with Chef Workstation
+      matchDepNames: ['ruby'],
+      matchDepTypes: ['uses-with'],
+      enabled: false,
     },
     {
       matchFileNames: [
