@@ -42,7 +42,7 @@ jobs:
           cache-to: type=gha,mode=max
           no-cache-filters: ${{ inputs.no-cache-filter }}
       - name: Install Test Kitchen
-        uses: ruby/setup-ruby@09a7688d3b55cf0e976497ff046b70949eeaccfd # v1.288.0
+        uses: ruby/setup-ruby@6ca151fd1bfcfd6fe0c4eb6837eb0584d0134a0c # v1.290.0
         with:
           bundler-cache: true
           ruby-version: '3.1'
