@@ -32,7 +32,7 @@ ARG SR_EXEC_VERSION=7.1.0
 # renovate: datasource=npm depName=@semantic-release/git
 ARG SR_GIT_VERSION=10.0.1
 # renovate: datasource=npm depName=conventional-changelog-conventionalcommits
-ARG CC_CONV_COMMITS_VERSION=9.2.0
+ARG CC_CONV_COMMITS_VERSION=9.3.0
 
 RUN : \
     && npm install -g semantic-release@${SEM_REL_VERSION} \
