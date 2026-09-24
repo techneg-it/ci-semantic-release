@@ -30,4 +30,3 @@ repos:
       - id: rubocop
         name: Check Ruby files with rubocop
         args: [--debug]
-        language_version: system
