@@ -28,7 +28,7 @@ jobs:
     name: Report success
     needs:
       - run-publish-workflow
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 5
     steps:
       - name: Update Healthchecks.io
