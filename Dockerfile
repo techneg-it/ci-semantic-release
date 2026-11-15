@@ -2,7 +2,7 @@ FROM alpine:latest@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0
 
 ARG TARGETARCH
 # renovate: datasource=golang-version depName=go
-ARG GO_VERSION=1.27.3
+ARG GO_VERSION=1.27.4
 ARG MNTN_VERSION=cd0c04e4d4168e5d13a26602e9c07f51e47a34b3
 
 RUN : \
